@@ -1,89 +1,72 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 const houseModel = require("./house");
-const dotenv = require("dotenv");
-
-dotenv.config();
-
-// Uncomment the following to debug mongoose queries, etc.
-mongoose.set("debug", true);
-
-mongoose.connect(
-//   "mongodb+srv://" +
-//     process.env.MONGO_USER +
-//     ":" +
-//     process.env.MONGO_PWD +
-//     "@" +
-//     process.env.MONGO_CLUSTER +
-//     "/" +
-//     process.env.MONGO_DB +
-//     "?retryWrites=true&w=majority",
-  "mongodb://localhost:27017/houses",
-  {
-    useNewUrlParser: true, //useFindAndModify: false,
-    useUnifiedTopology: true,
-  }
-);
-// .catch((error) => console.log(error));
-// console.log("process.env:" + process.env);
-// console.log(
-//   "mongodb+srv://" +
-//     process.env.MONGO_USER +
-//     ":" +
-//     process.env.MONGO_PWD +
-//     "@" +
-//     process.env.MONGO_CLUSTER +
-//     "/" +
-//     process.env.MONGO_DB
-// );
+const petModel = require("./pet");
 
 async function getHouses(name, job) {
   let result;
   if (name === undefined && job === undefined) {
-    result = await userModel.find();
+    result = await houseModel.find();
   } else if (name && !job) {
-    result = await findUserByName(name);
+    result = await findhouseByName(name);
   } else if (job && !name) {
-    result = await findUserByJob(job);
+    result = await findhouseByJob(job);
   } else {
-    result = await findUserByNameAndJob(name, job);
+    result = await findhouseByNameAndJob(name, job);
   }
   return result;
 }
 
-async function findUserById(id) {
+async function getHousesAndPets(name, job) {
+  let result;
+  if (name === undefined && job === undefined) {
+    result = await houseModel
+      .find()
+      .populate("pets")
+      .then((res) => console.log("The pets are:" + res));
+  } else if (name && !job) {
+    result = await findhouseByName(name);
+  } else if (job && !name) {
+    result = await findhouseByJob(job);
+  } else {
+    result = await findhouseByNameAndJob(name, job);
+  }
+  return result;
+}
+
+async function findhouseById(id) {
   // try {
-  return await userModel.findById(id);
+  return await houseModel.findById(id);
   // } catch (error) {
   //   console.log(error);
   //   return undefined;
   // }
 }
 
-async function addUser(user) {
+async function addhouse(house) {
   // try {
-  const userToAdd = new userModel(user);
-  const savedUser = await userToAdd.save();
-  return savedUser;
+  const houseToAdd = new houseModel(house);
+  const savedhouse = await houseToAdd.save();
+  return savedhouse;
   // } catch (error) {
   //   console.log(error);
   //   return false;
   // }
 }
 
-async function findUserByName(name) {
-  return await userModel.find({ name: name });
+async function findhouseByName(name) {
+  return await houseModel.find({ name: name });
 }
 
-async function findUserByJob(job) {
-  return await userModel.find({ job: job });
+async function findhouseByJob(job) {
+  return await houseModel.find({ job: job });
 }
 
-async function findUserByNameAndJob(name, job) {
-  return await userModel.find({ name: name, job: job });
+async function findhouseByNameAndJob(name, job) {
+  return await houseModel.find({ name: name, job: job });
 }
 
-async function deleteUser(id) {
-  return await userModel.findByIdAndDelete(id);
+async function deletehouse(id) {
+  return await houseModel.findByIdAndDelete(id);
 }
 
 // async function disconnectDB() {
@@ -91,9 +74,11 @@ async function deleteUser(id) {
 //   await mongoose.disconnect();
 // }
 
-exports.getUsers = getUsers;
-exports.findUserById = findUserById;
-exports.findUserByName = findUserByName;
-exports.addUser = addUser;
-exports.deleteUser = deleteUser;
+exports.getHouses = getHouses;
+exports.getHousesAndPets = getHousesAndPets;
+
+exports.findhouseById = findhouseById;
+exports.findhouseByName = findhouseByName;
+exports.addhouse = addhouse;
+exports.deletehouse = deletehouse;
 // exports.disconnectDB = disconnectDB;

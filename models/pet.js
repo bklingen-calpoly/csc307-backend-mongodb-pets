@@ -1,21 +1,23 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
 
-const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  job: {
-    type: String,
-    required: true,
-    trim: true,
-    validate(value) {
-      if (value.length < 2) throw new Error("Invalid job.");
+const PetSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    type: {
+      type: String,
+      required: true,
+      trim: true,
     },
   },
-}, {collection : 'users_list'});
+  { collection: "pets" }
+);
 
-const User = mongoose.model("User", UserSchema);
+const Pet = mongoose.model("Pet", PetSchema);
 
-module.exports = User;
+module.exports = Pet;

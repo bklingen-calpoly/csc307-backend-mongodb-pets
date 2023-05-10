@@ -1,40 +1,4 @@
-const mongoose = require("mongoose");
 const houseModel = require("./house");
-const dotenv = require("dotenv");
-
-dotenv.config();
-
-// Uncomment the following to debug mongoose queries, etc.
-mongoose.set("debug", true);
-
-mongoose.connect(
-//   "mongodb+srv://" +
-//     process.env.MONGO_USER +
-//     ":" +
-//     process.env.MONGO_PWD +
-//     "@" +
-//     process.env.MONGO_CLUSTER +
-//     "/" +
-//     process.env.MONGO_DB +
-//     "?retryWrites=true&w=majority",
-  "mongodb://localhost:27017/houses",
-  {
-    useNewUrlParser: true, //useFindAndModify: false,
-    useUnifiedTopology: true,
-  }
-);
-// .catch((error) => console.log(error));
-// console.log("process.env:" + process.env);
-// console.log(
-//   "mongodb+srv://" +
-//     process.env.MONGO_USER +
-//     ":" +
-//     process.env.MONGO_PWD +
-//     "@" +
-//     process.env.MONGO_CLUSTER +
-//     "/" +
-//     process.env.MONGO_DB
-// );
 
 async function getHouses(name, job) {
   let result;

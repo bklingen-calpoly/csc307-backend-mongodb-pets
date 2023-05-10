@@ -1,49 +1,48 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
 
-const HouseSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  street: {
-    type: String,
-    required: true,
-    trim: true,
+const HouseSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
     },
     street: {
-        type: String,
-        required: true,
-        trim: true,
-    },  
+      type: String,
+      required: true,
+      trim: true,
+    },
+    street: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     city: {
-        type: String,
-        required: true,
-        trim: true,
-    },  
+      type: String,
+      required: true,
+      trim: true,
+    },
     state: {
-                type: String,
-                required: true,
-                trim: true,
-                },
+      type: String,
+      required: true,
+      trim: true,
+    },
     zip: {
-                    type: Integer,
-                    required: true,
-                    trim: true,
-                    },
-                    zip: {
-                        type: Integer,
-                        required: true,
-                        trim: true,
-                        },
-                        pets:
-                        {
-                            type: Schema.Types.ObjectId, ref:'Pet',
-                            required: false,
-                            trim: true,
-                            },
+      type: Number,
+      required: true,
+      trim: true,
+    },
+    pets: {
+      type: Schema.Types.ObjectId,
+      ref: "Pet",
+      required: false,
+      trim: true,
+    },
   },
-}, {collection : 'houset'});
+  { collection: "houses" }
+);
 
 const House = mongoose.model("House", HouseSchema);
 
