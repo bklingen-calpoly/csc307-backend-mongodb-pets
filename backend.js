@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 
 // Add mongdb house services
 const houseServices = require("./models/house-services");
+const petServices = require("./models/pet-services");
 
 const app = express();
 const port = 8000;
@@ -50,35 +51,6 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send(`Hello World! - pets node backend app version ${APP_VERSION}`);
-});
-
-app.get("/pets", async (req, res) => {
-  // res.send(houses); this is a very very very very very very very very very long line
-  //HTTP code 200 is set by default. See an alternative below
-  // res.status(200).send(houses);
-  const name = req.query["name"];
-  const job = req.query["job"];
-  if (name === undefined && job === undefined) {
-    try {
-      const houses_from_db = await houseServices.getHouses();
-      res.send({ houses_list: houses_from_db });
-    } catch (error) {
-      console.log("Mongoose error: " + error);
-      res.status(500).send("An error ocurred in the server.");
-    }
-  } else if (name && job === undefined) {
-    let result = await houseServices.findhouseByName(name);
-    result = { houses_list: result };
-    res.send(result);
-  } else if (job && name === undefined) {
-    let result = await houseServices.findhouseByJob(job);
-    result = { houses_list: result };
-    res.send(result);
-  } else {
-    let result = await houseServices.findhouseByNameAndJob(name, job);
-    result = { houses_list: result };
-    res.send(result);
-  }
 });
 
 app.get("/houses", async (req, res) => {
@@ -135,6 +107,31 @@ app.get("/housesAndPets", async (req, res) => {
   } else {
     let result = await houseServices.findhouseByNameAndJob(name, job);
     result = { houses_list: result };
+    res.send(result);
+  }
+});
+app.get("/pets", async (req, res) => {
+  const name = req.query["name"];
+  const job = req.query["job"];
+  if (name === undefined && job === undefined) {
+    try {
+      const pets_from_db = await petServices.getPets();
+      res.send({ pets_list: pets_from_db });
+    } catch (error) {
+      console.log("Mongoose error: " + error);
+      res.status(500).send("An error ocurred in the server.");
+    }
+  } else if (name && job === undefined) {
+    let result = await petservices.findhouseByName(name);
+    result = { pets_list: result };
+    res.send(result);
+  } else if (job && name === undefined) {
+    let result = await petServices.findhouseByJob(job);
+    result = { pets_list: result };
+    res.send(result);
+  } else {
+    let result = await PetServices.findhouseByNameAndJob(name, job);
+    result = { pets_list: result };
     res.send(result);
   }
 });

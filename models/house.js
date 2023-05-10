@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
+const Pet = require("./pet");
 
 const HouseSchema = new Schema(
   {
+    _id: mongoose.Schema.Types.ObjectId,
     name: {
       type: String,
       required: true,
@@ -34,12 +36,14 @@ const HouseSchema = new Schema(
       required: true,
       trim: true,
     },
-    pets: {
-      type: Schema.Types.ObjectId,
-      ref: "Pet",
-      required: false,
-      trim: true,
-    },
+    pets: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Pet",
+        required: false,
+        trim: true,
+      },
+    ],
   },
   { collection: "houses" }
 );

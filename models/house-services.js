@@ -19,10 +19,9 @@ async function getHouses(name, job) {
 async function getHousesAndPets(name, job) {
   let result;
   if (name === undefined && job === undefined) {
-    result = await houseModel
-      .find()
-      .populate("pets")
-      .then((res) => console.log("The pets are:" + res));
+    result = await houseModel.find().populate("pets");
+    // .then((res) => console.log("The pets are:" + res));
+    console.log("The house with pets: " + result);
   } else if (name && !job) {
     result = await findhouseByName(name);
   } else if (job && !name) {

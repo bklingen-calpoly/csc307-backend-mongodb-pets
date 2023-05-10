@@ -1,6 +1,6 @@
-const houseModel = require("./house");
+const petModel = require("./pet");
 
-async function getHouses(name, job) {
+async function getPets(name, job) {
   let result;
   if (name === undefined && job === undefined) {
     result = await petModel.find();
@@ -55,9 +55,9 @@ async function deleteUser(id) {
 //   await mongoose.disconnect();
 // }
 
-exports.getUsgetPets = getPets;
-exports.findUserById = findUserById;
-exports.findUserByName = findUserByName;
-exports.addUser = addUser;
-exports.deleteUser = deleteUser;
+exports.getPets = getPets;
+// exports.findUserById = findUserById;
+// exports.findUserByName = findUserByName;
+// exports.addUser = addUser;
+// exports.deleteUser = deleteUser;
 // exports.disconnectDB = disconnectDB;
