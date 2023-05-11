@@ -54,11 +54,9 @@ async function addHouse(house) {
 
 async function addPetToHouse(house_id, pet_id) {
   const petToAdd = await petModel.find({ _id: pet_id });
-  console.log("addPetToHouse: " + petToAdd);
   const updatedHouse = await houseModel.findByIdAndUpdate(house_id, {
     $push: { pets: pet_id },
   });
-  console.log("addPetToHouse updatedHouse: " + updatedHouse);
   return updatedHouse;
 }
 
