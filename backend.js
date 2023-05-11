@@ -156,7 +156,7 @@ async function findhouseById(id) {
   }
 }
 
-app.delete("/petss/:id", async (req, res) => {
+app.delete("/pets/:id", async (req, res) => {
   const id = req.params["id"];
   if (deletehouseById(id)) res.status(204).end();
   else res.status(404).send("Resource not found.");
@@ -173,14 +173,14 @@ async function deletehouseById(id) {
 app.post("/houses", async (req, res) => {
   const house = req.body;
   result = await houseServices.addHouse(house);
-  if (result) res.send(result).status(201).end();
+  if (result) res.status(201).send(result).end();
   else res.status(500).end();
 });
 
 app.post("/pets", async (req, res) => {
   const pet = req.body;
   result = await petServices.addPet(pet);
-  if (result) res.send(result).status(201).end();
+  if (result) res.status(201).send(result).end();
   else res.status(500).end();
 });
 
