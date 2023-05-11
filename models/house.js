@@ -5,7 +5,6 @@ const Pet = require("./pet");
 
 const HouseSchema = new Schema(
   {
-    _id: mongoose.Schema.Types.ObjectId,
     name: {
       type: String,
       required: true,

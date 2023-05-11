@@ -172,45 +172,36 @@ async function deletehouseById(id) {
 }
 app.post("/houses", async (req, res) => {
   const house = req.body;
-  if (await houseServices.addhouse(house)) res.status(201).end();
+  result = await houseServices.addHouse(house);
+  if (result) res.send(result).status(201).end();
   else res.status(500).end();
 });
 
 app.post("/pets", async (req, res) => {
-  const house = req.body;
-  if (await houseServices.addhouse(house)) res.status(201).end();
+  const pet = req.body;
+  result = await petServices.addPet(pet);
+  if (result) res.send(result).status(201).end();
   else res.status(500).end();
 });
 
-app.patch("/pets/:id", async (req, res) => {
+app.patch("/houses/:id", async (req, res) => {
   const id = req.params["id"];
-  const updatedhouse = req.body;
-  const result = await updatehouse(id, updatedhouse);
-  if (result === 204) res.status(204).end();
+  const petToAdd = req.body._id;
+  const result = await houseServices.addPetToHouse(id, petToAdd);
+  if (result) res.status(204).end();
   else if (result === 404) res.status(404).send("Resource not found.");
   else if (result === 500) {
     res.status(500).send("An error ocurred in the server.");
   }
 });
 
-async function updatehouse(id, updatedhouse) {
-  try {
-    const result = await houseModel.findByIdAndUpdate(id, updatedhouse);
-    if (result) return 204;
-    else return 404;
-  } catch (error) {
-    console.log(error);
-    return 500;
-  }
-}
-
 app.listen(process.env.PORT || port, () => {
   if (process.env.PORT) {
     console.log(
-      `REST API Version ${APP_VERSION} is listening on port: ${process.env.PORT}.`
+      `HousePets REST API Version ${APP_VERSION} is listening on port: ${process.env.PORT}.`
     );
   } else
     console.log(
-      `REST API Version ${APP_VERSION} is listening on port: ${port}.`
+      `HousePets REST API Version ${APP_VERSION} is listening on port: ${port}.`
     );
 });

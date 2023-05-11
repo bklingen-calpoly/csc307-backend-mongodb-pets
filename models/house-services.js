@@ -41,7 +41,7 @@ async function findhouseById(id) {
   // }
 }
 
-async function addhouse(house) {
+async function addHouse(house) {
   // try {
   const houseToAdd = new houseModel(house);
   const savedhouse = await houseToAdd.save();
@@ -50,6 +50,16 @@ async function addhouse(house) {
   //   console.log(error);
   //   return false;
   // }
+}
+
+async function addPetToHouse(house_id, pet_id) {
+  const petToAdd = await petModel.find({ _id: pet_id });
+  console.log("addPetToHouse: " + petToAdd);
+  const updatedHouse = await houseModel.findByIdAndUpdate(house_id, {
+    $push: { pets: pet_id },
+  });
+  console.log("addPetToHouse updatedHouse: " + updatedHouse);
+  return updatedHouse;
 }
 
 async function findhouseByName(name) {
@@ -78,6 +88,8 @@ exports.getHousesAndPets = getHousesAndPets;
 
 exports.findhouseById = findhouseById;
 exports.findhouseByName = findhouseByName;
-exports.addhouse = addhouse;
+exports.addHouse = addHouse;
+exports.addPetToHouse = addPetToHouse;
+
 exports.deletehouse = deletehouse;
 // exports.disconnectDB = disconnectDB;
